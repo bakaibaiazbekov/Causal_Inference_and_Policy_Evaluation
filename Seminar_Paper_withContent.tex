@@ -1,0 +1,212 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     LATEX TEMPLATE                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}                % Verarbeitung von Umlauten
+\usepackage[utf8]{inputenc}		      	% Eingabe von Umlauten
+\usepackage[ngerman,USenglish]{babel}             % Rechtschreibung und Trennung
+\usepackage{amssymb,amsmath,amsfonts}   % F�r mathematische Darstellungen
+\usepackage{setspace}\onehalfspacing    % Zeilenabstand
+\usepackage[margin=3cm,includefoot]{geometry}    % Rand
+\usepackage{natbib}
+\usepackage{graphicx}
+
+%\begin{document}
+
+%---------- Define variables for cover sheet ----------%
+
+% Angaben zum Deckblatt: Bitte vervollst�ndigen
+\def\dbtitle    	{BlA BLA BLA }   					% z.B. Competition and Efficiency
+\def\dbsupervisor 	{Me}        % e.g. Karl Marx
+\def\dbname     	{Christoph Winter}                  	% e.g. Friedrich Engels
+\def\dbmajor    	{Econ PhD}           			% e.g. VWL (Magister)
+\def\dbsem		 	{25}          		% e.g. 7
+\def\dbadrs     	{Address line 1}     		% e.g. Geschwister-Scholl-Platz 1
+\def\dbadrt     	{Address line 2}      		% e.g. 01259 M�nchen
+
+% Semester und Titel des Schwerpunktseminars: Eventl. anpassen
+\def\dbsemester{Summer Term 2016}
+\def\dbsemtitle{Topics in International Migration}
+
+
+\newcommand{\test}{\dbsemtitle}
+
+%----- Cover Sheet -----%
+\newcommand{\makedeckblatt}{
+ \begin{titlepage}
+   \vspace*{1.5cm}
+   \begin{center}
+ 	\Huge
+     \dbtitle\\
+     \vspace{3.5cm}
+     \Large
+     \textsc{Schwerpunktseminar\\
+     \dbsemester}\\
+     \vspace{0.5cm}
+ 	\large
+     \dbsemtitle
+   \end{center}
+   \normalsize
+   \vfill
+   \begin{tabular*}{\linewidth}{l@{\extracolsep\fill}l}
+ 	Submitted by:     		&  Supervisor:   \\
+ 	\dbname              	&  \dbsupervisor \\
+ 	\dbmajor              		\\
+ 	\dbsem. semester 		\\ [1ex]
+ 	\dbadrs              		\\
+ 	\dbadrt
+   \end{tabular*}
+ \end{titlepage}
+}
+
+\newcommand{\dbandtoc}{
+  \makedeckblatt
+  \pagenumbering{roman}
+  \tableofcontents
+  \newpage
+ % \addcontentsline{toc}{section}{\listfigurename} %% comment this line if you do not want the list of figures in your table of content
+  %\listoffigures %% You do not need a list of figures for the seminar paper
+  \newpage
+  %\addcontentsline{toc}{section}{\listtablename} %% same here
+  %\listoftables %% You do not need a list of tables for the seminar paper
+ % \thispagestyle{empty}
+  \pagebreak
+  \pagenumbering{arabic}
+}
+
+
+
+\begin{document}
+
+% Table of Contents and Cover Sheet (automatically) 
+\dbandtoc
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           Start of Thesis          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \parindent 0pt 		% Have no indent on the first line of each paragrap
+
+\section{Introduction}
+
+ABC\footnote{This is a footnote.}
+
+ 
+\section{This might be useful}
+
+\subsection{Make Comments}
+% This is a comment that doesn't show up
+
+\section{Useful Commands}
+
+\textbf{This is bold text.} This not.\footnote{This is the second footnote.}
+In diesem ist das letzte Wort \textit{kursiv}.
+
+New line.
+No new line \\
+\\
+New line
+
+New Paragraph
+
+\begin{small}
+This is small.
+This is also small.
+\begin{tiny}
+Very tiny. 
+\end{tiny}
+\end{small}
+
+\begin{tiny}
+Very tiny. 
+\end{tiny}
+
+\subsection{Tables and Figures}
+\label{subsec:TablesFigures}
+
+\subsection{Equations}
+
+$x=1$ or $x^{2+54}=y_{2+3} \sum_{n=1}^{N} \beta \rho \Delta$
+
+\begin{equation}
+y_{2+3} \sum_{n=1}^{N} 
+\end{equation}
+
+
+
+
+\subsubsection{Make own Table}
+
+\begin{table}[h]
+\caption{This is my first Table}
+\label{tab:WageChange}
+
+\begin{center}
+\begin{small}
+
+\begin{tabular}{l c r}
+
+\hline \hline
+\textbf{City 1} & \textbf{City 2} & \textbf{City 3} \\
+\hline
+Hamburg & München & Dortmund \\
+& & \\
+Ende1 & Ende2 & Ende 3 \\
+\hline
+\end{tabular}
+\end{small}
+\end{center}
+
+\end{table}
+
+\subsection{Include Figures}
+
+\begin{figure}[h]
+\caption{ABC}
+\center
+\includegraphics[scale=0.75]{e5_raiseabs_hist}
+\includegraphics[scale=0.75]{density_bmi}
+
+\end{figure}
+
+\begin{figure}[h]
+\caption{ABC}
+\center
+\includegraphics[scale=0.40]{e5_raiseabs_hist}
+\includegraphics[scale=0.40]{density_bmi}
+\end{figure}
+
+\subsection{References to Tables and Figures}
+
+Like the authors show in Table\ref{tab:WageChange} .... 
+
+
+Like we have already discussed in Subsection \ref{subsec:TablesFigures}
+\section{Discussion}
+
+
+
+\subsection{Pros}
+This are the pros.
+\subsubsection{Pro1}
+Pro 1.....
+This idea was developed by \cite{borjas1994economics}. Migration is bad  \citep{borjas1994economics}
+\subsubsection{Pro2}
+Pro 2....
+This is where you put the content!!
+\subsection{Cons}
+This are the cons.
+
+
+%Not sure about that 
+%Borjas (2008) shows that XY reduces migration.
+
+\clearpage
+
+\bibliographystyle{econometrica}
+\bibliography{references}
+
+
+\end{document}

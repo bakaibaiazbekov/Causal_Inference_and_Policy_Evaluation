@@ -1,0 +1,11 @@
+@article{10.2307/25067409,
+ ISSN = {15287084},
+ URL = {http://www.jstor.org/stable/25067409},
+ author = {Steven Raphael and Michael A. Stoll and Mark Duggan and Anne Morrison Piehl},
+ journal = {Brookings-Wharton Papers on Urban Affairs},
+ pages = {207--255},
+ publisher = {Brookings Institution Press},
+ title = {The Effect of Prison Releases on Regional Crime Rates [with Comments]},
+ year = {2004}
+}
+

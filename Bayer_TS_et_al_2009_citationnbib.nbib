@@ -1,0 +1,19 @@
+
+PMID - 19118500
+STAT - Published
+DP - 2009
+TI - Synthetic control of a fitness tradeoff in yeast nitrogen metabolism.
+SO - Curator triage
+LR - 2018-11-13 00:00:00
+PG - 1
+VI - 3
+SO - SGD
+AU - Bayer TS
+AU - Hoff KG
+AU - Beisel CL
+AU - Lee JJ
+AU - Smolke CD
+PT - Journal Article
+AB - BACKGROUND: Microbial communities are involved in many processes relevant to industrial and medical biotechnology, such as the formation of biofilms, lignocellulosic degradation, and hydrogen production. The manipulation of synthetic and natural microbial communities and their underlying ecological parameters, such as fitness, evolvability, and variation, is an increasingly important area of research for synthetic biology. RESULTS: Here, we explored how synthetic control of an endogenous circuit can be used to regulate a tradeoff between fitness in resource abundant and resource limited environments in a population of Saccharomyces cerevisiae. We found that noise in the expression of a key enzyme in ammonia assimilation, Gdh1p, mediated a tradeoff between growth in low nitrogen environments and stress resistance in high ammonia environments. We implemented synthetic control of an endogenous Gdh1p regulatory network to construct an engineered strain in which the fitness of the population was tunable in response to an exogenously-added small molecule across a range of ammonia environments. CONCLUSION: The ability to tune fitness and biological tradeoffs will be important components of future efforts to engineer microbial communities.
+TA - J Biol Eng
+JT - Journal of biological engineering
