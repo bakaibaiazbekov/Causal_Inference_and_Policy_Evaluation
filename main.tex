@@ -77,6 +77,33 @@ They provided reasonable interpretation of estimate is that the causal effect of
 
 \newpage
 \section{Measurement and estimation analysis}
+\subsection{Two - Stage Least Squares}
+
+In the general IV regression model, we do assumptions  on instrument relevance and instrument exogeneity that are the same as in the simple regression model with a single endogenous regressor and only one instrument. In our case the authors took endogenous variable Electronic Monitoring and instrument court, percentage judge sent to EM and judge already used EM. Below I showed the general Instrumental Variables Regression Model and Terminology : 
+
+\begin{equation}
+    \centering
+    Recidivism_i = \beta_0 + \beta_1Electronic Monitoring_i + \beta_2Court_i + u_i  
+\end{equation}
+
+where $R_i$ is a dummy variable that indicates whether individual $i$ went back to detention in the Province of Buenos Aires after his release, $EM_i$ is a dummy variable that indicates whether individual $i$ was in the electronic monitoring group and using judge ideology as an instrument with F statistics for the joint significance is 4,36. There was 172 judges in this sample (1503), so this approach has limitations. 
+
+While computing both stages of TSLS individually is not big deal, the simple regression model with a single endogenous regressor, the more interesting part was resorting TSLS functions like \textbf{ivreg()} was more convenient when the set of potentially endogenous regressors and instruments are large. 
+
+Similarly to the simple IV regression model, the general IV model can be estimated using the two- stage least squares estimator: On the First stage, I run the OLS regressions for each of the endogenous variables, in this case $electronic monitoring_i$ on all instrumental variables, ($judge dummies_i$, $percentage judge sent to EM_i$ , and $judge already used EM_i$), all exogenous variables and an intercept. For the second stage I regress the dependent variable on the predicted values of all endogenous regressors, all exogenous variables and an intercept using OLS. This gave me $\widehat{\beta_0}$ ,..., $\widehat{\beta_{k+r}}$, the TSLS estimates of the model coefficients. 
+
+To show that our instrument is valid we have\textit{ two conditions.} In the general IV regression model, the instrument relevance and instrument exogeniety assumptions are the same as in the simple regression model with a single endogenous regressor and only one instrument. Lets say for $Z_{1i},...,Z_{mi}$, judge ideology, instrument to be as set of valid instruments, the following two conditions must be fulfilled: First of all, \textbf{Instrument relevance} : when there are $k$ endogenous variables, electronic monitoring, $r$ exogenous variables and $m >= k$ instruments $Z$ and the $\widehat{X}_{1i} ,..., \widehat{X}_{ki}$ are the predicted values from the  $k$ population first stage regressions, it must hold that $\widehat{X}_{1i} ,..., \widehat{X}_{ki}, W_{1i},...,W_{ri}, 1$ are not perfectly multicollinear. 
+
+Next condition is \textbf{Instrument exogeneity}: it should hold for all $m$ instruments  and it must be uncorrelated with error term, $\rho_{Z_{1i} = 0} ,..., \rho_{Z_{mi,u_i}}$. This condition can not be tested thats why I will prove verbally. 
+
+
+
+
+By the first condition I checked for Instrument Relevance, if it was weak instrument that provides little information about the variation in X that is exploited by IV regression to estimate the effect of recidivism: the estimate of the coefficient on the endogenous regressor will be  estimated inaccurately. Moreover, weak instruments cause the distribution of the estimator to deviate considerably from a normal distribution even in large samples such that the usual methods for obtaining inference about the true coefficient on  X may produce wrong results. 
+
+In the following steps I decided to check if there is correlation between an instrument and the error term, because  IV regression will not be consistent.  For this case I used the over-identifying restrictions test, the J-test, is an approach to test the hypothesis that additional instruments are exogenous. For the J-test to be applicable there need to be more instruments than endogenous regressors.
+
+
 \subsection{Validating IV assumption}
 The heterogeneity in views comes from a combination of ideology and practical considerations. In this case the differences across judges is over what to do with individuals typically caught in the act and with a strong presumption of guilt, before they receive final sentence. These two extreme judicial positions have been widely reported in the paper, liberals and conservatives, where liberal judges regularly assign electronic monitoring but conservative judges never do so. 
 
@@ -117,31 +144,7 @@ As a benchmark it was helpful to note that in the raw data, the proportion of in
 
 In column one of table five authors used judge dummies as an instrument. In column two of the same table thy used as an instrument \% judge sent to EM, the percentage of offenders whom the judge sent to electronic monitoring. The percentage were calculated using the full sample of 24,362 individuals and were restricted attention to judges with more than 10 offenders. The coefficient of the regression was still negative and significant and larger in absolute size than the OLS Estimate, implying a reduction of 59 percent of raw recidivism rate following prison. 
 
-\subsection{Two- Stage Least Squares}
 
-In the general IV regression model, we do assumptions  on instrument relevance and instrument exogeneity that are the same as in the simple regression model with a single endogenous regressor and only one instrument. In our case the authors took endogenous variable Electronic Monitoring and instrument court, percentage judge sent to EM and judge already used EM. Below I showed the general Instrumental Variables Regression Model and Terminology : 
-
-\begin{equation}
-    \centering
-    Recidivism_i = \beta_0 + \beta_1Electronic Monitoring_i + \beta_2Court_i + u_i  
-\end{equation}
-
-where $R_i$ is a dummy variable that indicates whether individual $i$ went back to detention in the Province of Buenos Aires after his release, $EM_i$ is a dummy variable that indicates whether individual $i$ was in the electronic monitoring group and using judge ideology as an instrument with F statistics for the joint significance is 4,36. There was 172 judges in this sample (1503), so this approach has limitations. 
-
-While computing both stages of TSLS individually is not big deal, the simple regression model with a single endogenous regressor, the more interesting part was resorting TSLS functions like \textbf{ivreg()} was more convenient when the set of potentially endogenous regressors and instruments are large. 
-
-Similarly to the simple IV regression model, the general IV model can be estimated using the two- stage least squares estimator: On the First stage, I run the OLS regressions for each of the endogenous variables, in this case $electronic monitoring_i$ on all instrumental variables, ($judge dummies_i$, $percentage judge sent to EM_i$ , and $judge already used EM_i$), all exogenous variables and an intercept. For the second stage I regress the dependent variable on the predicted values of all endogenous regressors, all exogenous variables and an intercept using OLS. This gave me $\widehat{\beta_0}$ ,..., $\widehat{\beta_{k+r}}$, the TSLS estimates of the model coefficients. 
-
-To show that our instrument is valid we have two conditions. In the general IV regression model, the instrument relevance and instrument exogeniety assumptions are the same as in the simple regression model with a single endogenous regressor and only one instrument. Lets say for $Z_{1i},...,Z_{mi}$, judge ideology, instrument to be as set of valid instruments, the following two conditions must be fulfilled: First of all, \textbf{Instrument relevance} : when there are $k$ endogenous variables, electronic monitoring, $r$ exogenous variables and $m >= k$ instruments $Z$ and the $\widehat{X}_{1i} ,..., \widehat{X}_{ki}$ are the predicted values from the  $k$ population first stage regressions, it must hold that $\widehat{X}_{1i} ,..., \widehat{X}_{ki}, W_{1i},...,W_{ri}, 1$ are not perfectly multicollinear. 
-
-Next condition is \textbf{Instrument exogeneity}: it should hold for all $m$ instruments  and it must be uncorrelated with error term, $\rho_{Z_{1i} = 0} ,..., \rho_{Z_{mi,u_i}}$
-
-
-
-
-By the first condition I checked for Instrument Relevance, since weak instruments provide little information about the variation in X that is exploited by IV regression to estimate the effect of recidivism: the estimate of the coefficient on the endogenous regressor is estimated inaccurately. Moreover, weak instruments cause the distribution of the estimator to deviate considerably from a normal distribution even in large samples such that the usual methods for obtaining inference about the true coefficient on  X may produce wrong results. 
-
-In the following steps I decided to check if there is correlation between an instrument and the error term, because  IV regression will not be consistent.  For this case I used the over-identifying restrictions test, the J-test, is an approach to test the hypothesis that additional instruments are exogenous. For the J-test to be applicable there need to be more instruments than endogenous regressors.
 
 \newpage
 \section{Theory of change analysis}
