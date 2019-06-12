@@ -70,8 +70,7 @@ They provided reasonable interpretation of estimate is that the causal effect of
 
 \newpage
 \section{Pure replication}
-Since authors provided all data and do files, my replication was short and I decided to do the replication in R. Initially, I had troubles subsetting the data cause STATA automatically omit NA's and drops irrelevant rows, however, in R I had to to do it manually. 
-
+Since authors provided all data and do files, my replication was short and I decided to do the replication in R. Initially, I had troubles subsetting the data cause STATA automatically omits NA's and drops irrelevant rows, however, in R I had to to do it manually. Secondly, I had an issue while  reproducing the code, everything ran smoothly, except for Column 4 of Table 5, where 15.1 SE version of STATA did not allow clustering for IV probit estimation. However, no such problem occurred in STATA 14.0 or R. Moreover, every regression estimates in all other tables and columns was clustered according to the same variable, but no such problem occurred. Below in appendix section, I attached all the tables  from R, except table number 1. Since it was just descriptive statistics I just added from STATA. Moreover, if you also interested in the code, you may reach them on my github repo : bakaibaiazbekov. 
 
 \newpage
 \section{Measurement and estimation analysis}
@@ -105,7 +104,7 @@ There are three groups in the sample: those who were assigned to EM, those who w
 By the first condition I checked for Instrument Relevance, if it was a weak instrument that provides little information about the variation in X that is exploited by IV regression to estimate the effect of recidivism: the estimate of the coefficient on the endogenous regressor will be  estimated inaccurately. Moreover, weak instruments cause the distribution of the estimator to deviate considerably from a normal distribution even in large samples such that the usual methods for obtaining inference about the true coefficient on  X may produce wrong results. 
 
 
-\subsection{Validating IV assumption}
+\subsection{Validating IV assumptions}
 The heterogeneity in views comes from a combination of ideology and practical considerations. In this case the differences across judges is over what to do with individuals typically caught in the act and with a strong presumption of guilt, before they receive final sentence. These two extreme judicial positions have been widely reported in the paper, liberals and conservatives, where liberal judges regularly assign electronic monitoring but conservative judges never do so. 
 
 \textit{A model of EM Assignment}
@@ -184,7 +183,7 @@ When the criminal justice releases prisoners, it creates trade-off between two s
 
 \newpage
 \section{Extensions}
-In section I decided to predict recidivism for each individual using a statistical model built from given data. Here I wanted to see if an analytical model could perform and predict recidivism to prevent the future criminal individuals or if they were assigned to prison, keep them for a longer time. In this model I used a method called classification and regression trees, CART. In our case the outcome is binary( 0 for no recidivism and 1 for recidivism). I could also used a logistic regression models but they are not easily interpretable. The model coefficients in the Logit regression indicate the importance and relative effect of variables, but do not give a simple explanation of how a decision is made. 
+In section I decided to predict recidivism for each individual using a statistical model built from given data. Here I wanted to see if an analytical model could perform and predict recidivism to prevent the future criminal individuals or if they were assigned to prison, keep them for a longer time. \textbf{(Kuziemko 2013)}\cite{Kuziemko2013} In this model I used a method called classification and regression trees, CART. In our case the outcome is binary( 0 for no recidivism and 1 for recidivism). I could also used a logistic regression models but they are not easily interpretable. The model coefficients in the Logit regression indicate the importance and relative effect of variables, but do not give a simple explanation of how a decision is made. 
 
 
 \begin{figure}[h]
@@ -223,11 +222,11 @@ After several years, it is clear that EM has been almost desperately applied wit
 In times with large prison populations and discussions regarding downsizing, it is important to recognize that alternative sanctions can have positive influences on young offenders future outcome, both in terms of recidivism and in regards to labor participation \textbf{Andersen 2014} \cite{Andersen2014} and educational outcomes. These findings are important in order to evaluate the returns of introducing noncustodial sanctions and to inform future policy decisions and discussion on electronic monitoring. It will, however, be important to do further qualitative and quantitative research to achieve a deeper understanding of the mechanisms behind these results: \textit{how} the different program elements affect offenders future outcomes, \textit{how} sanction types influence educational trajectories and \textit{how} different outcomes like crime, education and labor market participation are interrelated. 
 
 
-
-
-
-\newpage
 \section{Conclusion}
+In conclusion, authors seeked to contribute to this debate by providing an estimate of the effect on recidivism of having a person serve time under electronic surveillance instead of prison. One of the key challenges they faced is that, ideally they tried to compare similar individuals after their release from EM and prison. This was rarely observed in practice because judicial allocation decisions are obviously influenced by the offenders perceived "meanness" and risk of recidivism. This is one of the reason why countries have a legal system. In this paper, they showed several essentials of the legal system in Argentina to study the effect of an EM program, where it is used to substitute for imprisonment of alleged offenders never receive final sentence, the system of preventive imprisonment is a key part of the legal system. 
+
+
+
 
 \newpage
 \section{Appendix}
