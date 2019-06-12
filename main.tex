@@ -54,11 +54,7 @@
 All societies must decide what to do with those who commit crimes. While a standard approach for centuries has been to incarcerate offenders but since the technology doesn't stay at same place, recently was proposed to use electronic monitoring bracelets for offenders to monitor them remotely. Electronic monitoring of offenders has been in use for just over two decades and motives for using it remain diverse. Some agencies that use EM attempt to deliver humane and affordable sanctions while others seek to relieve jail crowding or to avoid the construction of new jails. 
 As the fiscal burden of the prison population has increased and as the electronic monitoring technology became cheaper and safer with more precise, where these devices can track GPS, recognize voice with machine learning techniques and measure the trans-dermal measurement of alcohol or drug consumption. In the history, there was prisons called "panopticon", where inmates could be watched continually by guards who could not be seen.  
 
-In this paper authors studied electronic monitoring in the Province of Buenos Aires, Argentina. They measured recidivism through rearrest rates of offenders treated with electronic monitoring since the programs inception in the late 1990s. As a benchmark, they took a sample of former prisoners of similar observable characteristics treated with incarceration, where they found a large negative and statistically significant correlation between electronic monitoring and rearrest rates.   
-
-This paper based on measurement of causal effect of criminal recidivism rate in the city of Buenos Aires. By focusing on the rearrest rates of two groups: individuals released from prison and individuals released from electronic monitoring program. Detainees are randomly assigned to different types of judges, where ideological di
-
-fferences across judges translate into large differences in the allocation of electronic monitoring. Taking into account this type of characteristics of judges, authors argue that there is a large, negative effect on criminal recidivism of treating individuals with electronic monitoring relative to prison. 
+This paper based on measurement of causal effect of criminal recidivism rate in the city of Buenos Aires. By focusing on the rearrest rates of two groups: individuals released from prison and individuals released from electronic monitoring program. Detainees are randomly assigned to different types of judges, where ideological differences across judges translate into large differences in the allocation of electronic monitoring. Taking into account this type of characteristics of judges, authors argue that there is a large, negative effect on criminal recidivism of treating individuals with electronic monitoring relative to prison. 
 
 Every year a large number of individuals are sent to prison in Argentina. By 2007, the Penitentiary Service of the Buenos Aires hosted of approximately 26,990 inmates which represented 44.5 percent of the total population under penal supervision of the whole country. The conditions of confinement are extremely poor, perhaps because the inmate population held in prisons and jails experienced a large increase from 12,223 in 1994 to 30,721 in 2005, with increase 18,498 in 11 years and without a corresponding increase in infrastructure investment. Given that prisons are costly to build and run and often involve cruel treatment of fellow citizens, possibly contributing to the conversion of inmates into "hardened" criminals, it is unsurprising that alternatives to imprisonment have been tried out. One of the more intriguing experiments in this area is the substitution of electronic monitoring for incarceration. If we look to statistics, by 2010, more than 500,000 people in the United States and Europe alone had been treated with electronic monitoring, in spite of the obvious complexity of a full cost-benefit analysis. In this paper, authors tried to contribute to an evaluation of electronic monitoring by providing the evidence on one of the estimates needed for such exercise: the difference between the recidivism rate of offenders treated with electronic monitoring and the recidivism rate of offenders released from a standard prison. 
 
@@ -74,6 +70,8 @@ They provided reasonable interpretation of estimate is that the causal effect of
 
 \newpage
 \section{Pure replication}
+Since authors provided all data and do files, my replication was short and I decided to do the replication in R. Initially, I had troubles subsetting the data cause STATA automatically omit NA's and drops irrelevant rows, however, in R I had to to do it manually. 
+
 
 \newpage
 \section{Measurement and estimation analysis}
@@ -81,34 +79,37 @@ They provided reasonable interpretation of estimate is that the causal effect of
 
 In the general IV regression model, we do assumptions  on instrument relevance and instrument exogeneity that are the same as in the simple regression model with a single endogenous regressor and only one instrument. In our case the authors took endogenous variable Electronic Monitoring and instrument court, percentage judge sent to EM and judge already used EM. Below I showed the general Instrumental Variables Regression Model and Terminology : 
 
-\begin{equation}
+         \begin{equation}
     \centering
-    Recidivism_i = \beta_0 + \beta_1Electronic Monitoring_i + \beta_2Court_i + u_i  
+    EM_i = \pi_0 + \pi_1Z_{1i} + \pi_2Z_{2i} + \pi_2X_{2i} + ... + \pi_iX_{ij} + u_i  
+    \end{equation}
+    
+        
+         \begin{equation}
+    \centering
+    Recidivism_i = \beta_0 + \beta_1\widehat{EM_i} + \pi_2X_{2i} + ... + \pi_iX_{ij} + u_i  
 \end{equation}
 
 where $R_i$ is a dummy variable that indicates whether individual $i$ went back to detention in the Province of Buenos Aires after his release, $EM_i$ is a dummy variable that indicates whether individual $i$ was in the electronic monitoring group and using judge ideology as an instrument with F statistics for the joint significance is 4,36. There was 172 judges in this sample (1503), so this approach has limitations. 
 
 While computing both stages of TSLS individually is not big deal, the simple regression model with a single endogenous regressor, the more interesting part was resorting TSLS functions like \textbf{ivreg()} was more convenient when the set of potentially endogenous regressors and instruments are large. 
 
-Similarly to the simple IV regression model, the general IV model can be estimated using the two- stage least squares estimator: On the First stage, I run the OLS regressions for each of the endogenous variables, in this case $electronic monitoring_i$ on all instrumental variables, ($judge dummies_i$, $percentage judge sent to EM_i$ , and $judge already used EM_i$), all exogenous variables and an intercept. For the second stage I regress the dependent variable on the predicted values of all endogenous regressors, all exogenous variables and an intercept using OLS. This gave me $\widehat{\beta_0}$ ,..., $\widehat{\beta_{k+r}}$, the TSLS estimates of the model coefficients. 
+Similarly to the simple IV regression model, the general IV model can be estimated using the two- stage least squares estimator: On the First stage, I run the OLS regressions for each of the endogenous variables, in this case $electronic monitoring_i$ on all instrumental variables, ($judge dummies_i$, $percentage judge sent to EM_i$ , and $judge already used EM_i$), all exogenous variables and an intercept. For the second stage I regress the dependent variable, \textit{recidivism} ,on the predicted values of all endogenous regressors, all exogenous variables and an intercept using OLS. This gave me $\widehat{\beta_0}$ ,..., $\widehat{\beta_{k+r}}$, the TSLS estimates of the model coefficients. 
 
 To show that our instrument is valid we have\textit{ two conditions.} In the general IV regression model, the instrument relevance and instrument exogeniety assumptions are the same as in the simple regression model with a single endogenous regressor and only one instrument. Lets say for $Z_{1i},...,Z_{mi}$, judge ideology, instrument to be as set of valid instruments, the following two conditions must be fulfilled: First of all, \textbf{Instrument relevance} : when there are $k$ endogenous variables, electronic monitoring, $r$ exogenous variables and $m >= k$ instruments $Z$ and the $\widehat{X}_{1i} ,..., \widehat{X}_{ki}$ are the predicted values from the  $k$ population first stage regressions, it must hold that $\widehat{X}_{1i} ,..., \widehat{X}_{ki}, W_{1i},...,W_{ri}, 1$ are not perfectly multicollinear. 
 
-Next condition is \textbf{Instrument exogeneity}: it should hold for all $m$ instruments  and it must be uncorrelated with error term, $\rho_{Z_{1i} = 0} ,..., \rho_{Z_{mi,u_i}}$. This condition can not be tested thats why I will prove verbally. 
+Next condition is \textbf{Instrument exogeneity}: it should hold for all $m$ instruments  and it must be uncorrelated with error term, $\rho_{Z_{1i} = 0} ,..., \rho_{Z_{mi,u_i}}$. This condition can not be tested thats why I will prove verbally. Since the assignment of judges is exogenous to prisoners characteristics (whenever a person is detained by the police, she or he is assigned to the judge who was on duty on that day, and duty turns are assigned by a lottery). 
 
+There are three groups in the sample: those who were assigned to EM, those who went to prison sent by a judge who uses EM, and those sent to prison by judge who never used EM. If judges who use EM in fact select the good types( low recidivism risk) for treatment with EM, then those standing before that same judge who were not selected for EM should be bad types(high recidivism risk). In particular, their average type should be worse than the average type of the conservative judges who did zero selection. In other words, the point estimate on the dummy judge ever used EM should be positive (as the base category is those who were sent to prison by judges who never selected anyone for EM). Instead this dummy variable is insignificant, with a point estimate of $-0.02$. 
 
-
-
-By the first condition I checked for Instrument Relevance, if it was weak instrument that provides little information about the variation in X that is exploited by IV regression to estimate the effect of recidivism: the estimate of the coefficient on the endogenous regressor will be  estimated inaccurately. Moreover, weak instruments cause the distribution of the estimator to deviate considerably from a normal distribution even in large samples such that the usual methods for obtaining inference about the true coefficient on  X may produce wrong results. 
-
-In the following steps I decided to check if there is correlation between an instrument and the error term, because  IV regression will not be consistent.  For this case I used the over-identifying restrictions test, the J-test, is an approach to test the hypothesis that additional instruments are exogenous. For the J-test to be applicable there need to be more instruments than endogenous regressors.
+By the first condition I checked for Instrument Relevance, if it was a weak instrument that provides little information about the variation in X that is exploited by IV regression to estimate the effect of recidivism: the estimate of the coefficient on the endogenous regressor will be  estimated inaccurately. Moreover, weak instruments cause the distribution of the estimator to deviate considerably from a normal distribution even in large samples such that the usual methods for obtaining inference about the true coefficient on  X may produce wrong results. 
 
 
 \subsection{Validating IV assumption}
 The heterogeneity in views comes from a combination of ideology and practical considerations. In this case the differences across judges is over what to do with individuals typically caught in the act and with a strong presumption of guilt, before they receive final sentence. These two extreme judicial positions have been widely reported in the paper, liberals and conservatives, where liberal judges regularly assign electronic monitoring but conservative judges never do so. 
 
 \textit{A model of EM Assignment}
-Consider a situation with no bail where judge faces a defendant with characteristics \textit{x} who must decide on pretrial detention in a prison or under EM. If judge assigns the defendant to EM but the defendant escapes with probability \textit{p(x)} and conditional on escaping will cause harm to others that generates ecpected costs for the judge \textit{H(x)}, with \textit{p'>0} and \textit{H'>0}. And if judge assigns the defendant to prison, there is no risk of escape but the judge experiences utility differential, where judges ideology is \textit{d}, when she sends defendant to prison who could have been treated less harshly. It can be also positive for some judges who enjoy being punitive but for many \textit{d} will be negative. 
+Consider a situation with no bail where judge faces a defendant with characteristics \textit{x} who must decide on pretrial detention in a prison or under EM. If judge assigns the defendant to EM but the defendant escapes with probability \textit{p(x)} and conditional on escaping will cause harm to others that generates expected costs for the judge \textit{H(x)}, with \textit{p'>0} and \textit{H'>0}. And if judge assigns the defendant to prison, there is no risk of escape but the judge experiences utility differential, where judges ideology is \textit{d}, when she sends defendant to prison who could have been treated less harshly. It can be also positive for some judges who enjoy being punitive but for many \textit{d} will be negative. 
 \begin{equation}
     \centering
     - p(x)H(x) > d.
@@ -142,7 +143,7 @@ where $R_i$ is a binary outcome that indicates whether individual i went back to
 \subsection{Using Judge Ideology to Estimate the Effect of EM on Recidivism}
 As a benchmark it was helpful to note that in the raw data, the proportion of individuals released from prison who have returned for another crime is 22.37 percent (255/1,140). It is 13,21 percent for the group of 386 alleged offenders released after spending time under EM, for a difference of 9 percentage points. On average, the postrelease period in the sample was 2,85 years. The average yearly recidivism rate for the prison sample was $7,8 (22,37/2,85)$ and for EM it was $4,6 (13,21/2,85)$. 
 
-In column one of table five authors used judge dummies as an instrument. In column two of the same table thy used as an instrument \% judge sent to EM, the percentage of offenders whom the judge sent to electronic monitoring. The percentage were calculated using the full sample of 24,362 individuals and were restricted attention to judges with more than 10 offenders. The coefficient of the regression was still negative and significant and larger in absolute size than the OLS Estimate, implying a reduction of 59 percent of raw recidivism rate following prison. 
+In column one of table five authors used judge dummies as an instrument. In column two of the same table they used as an instrument \% judge sent to EM, the percentage of offenders whom the judge sent to electronic monitoring. The percentage were calculated using the full sample of 24,362 individuals and were restricted attention to judges with more than 10 offenders. The coefficient of the regression was still negative and significant and larger in absolute size than the OLS Estimate, implying a reduction of 59 percent of raw recidivism rate following prison. 
 
 
 
@@ -160,7 +161,8 @@ The results of this empirical analyses showed significant differences between of
 
 
 \subsection{Recidivism risk versus fixed - sentence regimes}
-Over the past three decades, many countries didn't take into account of parole boards, which traditionally have had the foresight to release inmates before the expiration of their full sentence, in favor of fixed - sentence regimes in which the original sentence is binding. However, if the prison time lowers recidivism risk and if parole boards can accurately estimate inmates recidivism risk, then relative to fixed - sentence regime, parole can provide allocative - efficiency benefits, that costly prison space is allocated to the highest risk offenders and incentive benefits such as : prisoners know thy must reduce their recidivism risk to gain an early release, so give incentives to invest in their own rehabilitation. In a quasi experiment by \textbf{Kuziemko 2013} \cite{Kuziemko2013}, she shows that prison time reduces recidivism risk and that parole boards set prison time in an allocatively efficient manner. Estimates showed that eliminating parole for all prisoners would increase the prison population by 10 \% while this means that it increases the crime rate through deleterious effects on recidivism. In her work, where I personally reasonable, she emphasizes two key ways that release policies can affect these costs. First, policies can be more or less allocatively efficient, it requires that costly prison space be allocated to inmates with the greatest recidivism risk. Second, release policies can incentivize inmates to lower their incarceration and recidivism costs by investing in their own rehabilitation. For instance, inmates who know that they must lower their recidivism risk to gain an early release may behave better in prison, meaning that to lower incarceration costs, or take steps to prepare themselves for successful release or lowering recidivism risk. In her paper, she presents evidence that parole boards  appear to perform better along these metrics than do policies in which inmates original sentences are binding. The results from the mass release experiment suggest that parole boards indeed assign longer terms to inmates with greater recidivism risk. Inmates who lost parole eligibility as a consequence of the reform accumulated more disciplinary infraction or violations. Therefore, an increase in th recidivism rate not only increases the prison population but also the overall crime rate, from her estimates is that 30 \% increase in the recidivism rate could lead to a 3 \% increase in the general crime rate and a considerably higher increase increase for serious violent crime such as murder, that means the cost of crime may be very high. 
+Another topic that I want to discuss is about how parole aboard can help to incentivize imprisoners to lower their recidivism risk and cut their sentence time and reduce jails cost. 
+Over the past three decades, many countries didn't take into account of parole boards, which traditionally have had the foresight to release inmates before the expiration of their full sentence, in favor of fixed - sentence regimes in which the original sentence is binding. However, if the prison time lowers recidivism risk and if parole boards can accurately estimate inmates recidivism risk, then relative to fixed - sentence regime, parole can provide allocative - efficiency benefits, that costly prison space is allocated to the highest risk offenders and incentive benefits such as : prisoners know they must reduce their recidivism risk to gain an early release, so give incentives to invest in their own rehabilitation. In a quasi experiment by \textbf{Kuziemko 2013} \cite{Kuziemko2013}, she shows that prison time reduces recidivism risk and that parole boards set prison time in an allocatively efficient manner. Estimates showed that eliminating parole for all prisoners would increase the prison population by 10 \% while this means that it increases the crime rate through deleterious effects on recidivism. In her work, where I personally found reasonable, she emphasizes two key ways that release policies can affect these costs. First, policies can be more or less allocatively efficient, it requires that costly prison space be allocated to inmates with the greatest recidivism risk. Second, release policies can incentivize inmates to lower their incarceration and recidivism costs by investing in their own rehabilitation. For instance, inmates who know that they must lower their recidivism risk to gain an early release may behave better in prison, meaning that to lower incarceration costs, or take steps to prepare themselves for successful release or lowering recidivism risk. In her paper, she presents evidence that parole boards  appear to perform better along these metrics than do policies in which inmates original sentences are binding. The results from the mass release experiment suggest that parole boards indeed assign longer terms to inmates with greater recidivism risk. Inmates who lost parole eligibility as a consequence of the reform accumulated more disciplinary infraction or violations. Therefore, an increase in the recidivism rate not only increases the prison population but also the overall crime rate, from her estimates is that 30 \% increase in the recidivism rate could lead to a 3 \% increase in the general crime rate and a considerably higher increase increase for serious violent crime such as murder, that means the cost of crime may be very high. 
 
 When the criminal justice releases prisoners, it creates trade-off between two significant social costs. On the one hand, keeping individuals in prison is very costly the operating costs of the prisons are billions of dollars annually. On the other hand, the costs associated with overly lenient releases are also high given the vastly disproportionate share of crime committed by the newly released for example, past work of \textbf{Raphael and Stoll (2004)} \cite{Rafael2004} tells that individuals released over the previous 12 months account for 14 \% of all murders. So, here you ask, how the choice of release policy can affect total incarceration and recidivism costs? There are two ways to approach this question: first, policies can be more or less allocatively efficient, or an allocatively efficient policy would release a prisoner at the point in time when the marginal cost of his incarceration equals the marginal expected cost of his or her recidivism risk,\textbf{Fig. 1} where the recidivism risk falls with time in prison, and thus allocative efficiency requires that lower -risk inmates leave prison sooner \textbf{Fig. 2}, given that higher -risk inmates require more time before their expected recidivism risk falls to the level of their incarceration cost. 
 
@@ -180,7 +182,36 @@ When the criminal justice releases prisoners, it creates trade-off between two s
 \label{fig:Figure 2}
 \end{figure}
 
+\newpage
+\section{Extensions}
+In section I decided to predict recidivism for each individual using a statistical model built from given data. Here I wanted to see if an analytical model could perform and predict recidivism to prevent the future criminal individuals or if they were assigned to prison, keep them for a longer time. In this model I used a method called classification and regression trees, CART. In our case the outcome is binary( 0 for no recidivism and 1 for recidivism). I could also used a logistic regression models but they are not easily interpretable. The model coefficients in the Logit regression indicate the importance and relative effect of variables, but do not give a simple explanation of how a decision is made. 
 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.60]{CART.JPG}
+\caption{CART split}
+\label{fig:Figure 1}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{Tree2.JPEG}
+\caption{CART split}
+\label{fig:Figure 1}
+\end{figure}
+
+A CART model is represented by tree that splits by observation outcome. The first split, as shown in the figure,  explains whether year is equal to 1993, 2003, 2004, 2005, 2006, 2007. If yes, the model says to predict red and if no the model moves on to the next split. Then the second split whether or not the number of imprisonment is less than one. If no, the model moves to the last split. The last split checks whether the year of entering to penitiary system is equal to 1997, 1998, 2000, 2001, 2002. If yes, the model predicts no recidivism, if no, the model predicts recidivism. 
+
+
+After cleaning and omitting all the NAs in the data, I used the method CART. This method builds what is called a tree by splitting on the values of the independent variables. To predict the recidivism for new observation, it is easy to follow the splits in the tree and at the end, I could see the most frequent outcome of recidivism in the training set that followed the same path. 
+The plot below illustrates sample data for two independent variables x and y, and each data point is colored by the outcome variable, red or gray. CART tries to split this data into subsets so that each subset is as pure or homogenous as possible. Then the model prediction is just the majority in each subset. If a new observation fell into one of these two subsets then it would predict red, since the majority of the observations in those subsets are red. Howver, if a new observation fell into one of these two subsets model would predict gray, since the majority of the observations in those two subsets are gray. 
+
+From this point, I will tell about the method of CART and related method called \textit{random forests.} To predict the outcome variable (recidivism), I used the same data from 1998 to 2007. My independent variables are electronic monitoring(Dummy 1 if the offender was assigned to EM), number of previous imprisonments (it is number of previous imprisonment that alleged offender had before), judge ever used EM( dummy 1 who ever used EM or liberal judges) ,age of the offender (it was in days but I could convert them to years), year( the year of entering offender to penitiary system), family visits( dummy = 1 if the alleged offender received family visits ), escapees (dummy = 1 if the alleged offender escaped) and dummies for each type of crime. Moreover, there are different ways to control how many splits are generated. One way is by setting a lower bound for the number of data points in each subset. In R programming it is called the minbucket parameter, for the minimum number of observation in each bucket or subset. The smaller minbucket is the more splits will be generated. But if it's too small, overfitting will occur. This means that CART will fit the training set almost perfectly. But this is bad because then the model will probably not perform well on test set data or new data. On the other hand, if the minbucket parameter is too large the model will be too simple and accuracy will be poor. In our case, I classified observations as either recidivism or no recidivism. Instead of just taking the majority outcome to be the prediction, I  computed the percentage of data in a subset of each type of outcome. For instance, if in my subset 10 no recidivism and 2 recidivism, then the model will predict 87 \% of no recidivism. And like in logistic regression I used threshold value to obtain the predicition.  Since the majority is no recidvism(0) model predict with threshold of 0.5, no recidivism. However, if I increase that threshold to 0.9 the model would predict recidivism. So by changing the threshold, it is easy to compute ROC curve and compute an AUC value to evaluate the model. 
+
+Now, I will briefly go thru on the pipline. First I splitted the data to \textit{Train, Test and Cross Validation} datasets. In case, I put 70 \% of the data in the training set and other 30 \% into testing set. After installing relevant packages into R studio, I built CART model with all X and Y variables stated previously. As a result I observed a confusion matrix on test dataset that model got correct 354 no recidivism(0) that are actually no recidvisim and 5 for recidivism that are actually recidivism(1). First I calculated the diagonal and divided for total number of observations in the table. From here I got accuracy of the model was 0.79. Lastly, to evaluate the model I generated ROC curve using ROCR package. ROC gives me probability of outcomes, in this case (0,1) for each observation in the test set. Quick note about AUC. It is an area under the ROC curve of 0.8, means that randomly selected case from group with the target equals Y has a score larger than that for a randomly chosen case from the group with the target equals N in 80 \% of the time. 
+
+In addition, I used a method that is similar to CART model named \textit{random forests}. This method was designed to improve the prediciton accuracy of CART and works by building a large number of CART trees, Unfortunately, this makes the method less interpretable than CART. So, there is trade off whether you need interpretability or the increase in accuracy more. To make prediction for a new observation each tree in the forest votes on the outcome and I pick the outcome that  receives the majority of the votes. So here comes a question how does random forest build many CART trees? \textbf{Random Forests} only allows each tree to split on a random subset of the available independent variables, and each tree is built from what people call bagged or bootstrapped sample of the data. This means that the data used as the training data for each tree is selected randomly with replacement. Being short, the random forest model improved accuracy a little bit over CART. 
 
 
 
@@ -191,12 +222,431 @@ After several years, it is clear that EM has been almost desperately applied wit
 
 In times with large prison populations and discussions regarding downsizing, it is important to recognize that alternative sanctions can have positive influences on young offenders future outcome, both in terms of recidivism and in regards to labor participation \textbf{Andersen 2014} \cite{Andersen2014} and educational outcomes. These findings are important in order to evaluate the returns of introducing noncustodial sanctions and to inform future policy decisions and discussion on electronic monitoring. It will, however, be important to do further qualitative and quantitative research to achieve a deeper understanding of the mechanisms behind these results: \textit{how} the different program elements affect offenders future outcomes, \textit{how} sanction types influence educational trajectories and \textit{how} different outcomes like crime, education and labor market participation are interrelated. 
 
+
+
+
+
 \newpage
 \section{Conclusion}
 
 \newpage
 \section{Appendix}
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{Table 2} 
+ \resizebox{\linewidth}{!}{
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{5}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-6} 
+\\[-1.8ex] & \multicolumn{5}{c}{electronicMonitoring} \\ 
+ & (I) & (II) & (III) & (IV) & (V) \\ 
+ 
+\hline \\[-1.8ex] 
+ percJudgeSentToEM & 0.663$^{***}$ & 0.660$^{***}$ & 0.660$^{***}$ & 0.660$^{***}$ & 0.637$^{***}$ \\ 
+  & (0.085) & (0.085) & (0.085) & (0.085) & (0.087) \\ 
+  & & & & & \\ 
+ judgeAlreadyUsedEM &  &  &  &  & 0.006$^{**}$ \\ 
+  &  &  &  &  & (0.002) \\ 
+  & & & & & \\ 
+ mostSeriousCrime02 - Attempted homicide &  & $-$0.001 & $-$0.001 & $-$0.001 & $-$0.001 \\ 
+  &  & (0.008) & (0.008) & (0.008) & (0.008) \\ 
+  & & & & & \\ 
+ mostSeriousCrime03 - Sexual offenses &  & 0.001 & 0.001 & 0.0004 & 0.0003 \\ 
+  &  & (0.008) & (0.008) & (0.008) & (0.008) \\ 
+  & & & & & \\ 
+ mostSeriousCrime04 - Other serious crimes &  & $-$0.001 & 0.0001 & 0.0001 & $-$0.00000 \\ 
+  &  & (0.007) & (0.007) & (0.007) & (0.007) \\ 
+  & & & & & \\ 
+ mostSeriousCrime05 - Aggravated robbery &  & $-$0.004 & $-$0.003 & $-$0.003 & $-$0.003 \\ 
+  &  & (0.004) & (0.004) & (0.004) & (0.004) \\ 
+  & & & & & \\ 
+ mostSeriousCrime06 - Attempted aggravated robbery &  & $-$0.014$^{***}$ & $-$0.013$^{***}$ & $-$0.012$^{***}$ & $-$0.012$^{***}$ \\ 
+  &  & (0.004) & (0.004) & (0.004) & (0.004) \\ 
+  & & & & & \\ 
+ mostSeriousCrime07 - Robbery &  & $-$0.011$^{***}$ & $-$0.010$^{**}$ & $-$0.009$^{**}$ & $-$0.009$^{**}$ \\ 
+  &  & (0.004) & (0.004) & (0.004) & (0.004) \\ 
+  & & & & & \\ 
+ mostSeriousCrime08 - Attempted robbery &  & $-$0.009$^{*}$ & $-$0.007 & $-$0.005 & $-$0.006 \\ 
+  &  & (0.005) & (0.005) & (0.005) & (0.005) \\ 
+  & & & & & \\ 
+ mostSeriousCrime09 - Possession of firearms &  & $-$0.008 & $-$0.007 & $-$0.006 & $-$0.007 \\ 
+  &  & (0.005) & (0.005) & (0.006) & (0.005) \\ 
+  & & & & & \\ 
+ mostSeriousCrime10 - Larceny / Attempted larceny &  & $-$0.012$^{***}$ & $-$0.010$^{**}$ & $-$0.009$^{*}$ & $-$0.009$^{*}$ \\ 
+  &  & (0.005) & (0.005) & (0.005) & (0.005) \\ 
+  & & & & & \\ 
+ mostSeriousCrime11 - Other minor crimes &  & 0.005 & 0.007 & 0.007 & 0.006 \\ 
+  &  & (0.006) & (0.006) & (0.006) & (0.006) \\ 
+  & & & & & \\ 
+ age &  &  &  & $-$0.00001$^{**}$ & $-$0.00001$^{*}$ \\ 
+  &  &  &  & (0.00000) & (0.00000) \\ 
+  & & & & & \\ 
+ ageSquared &  &  &  & 0.000$^{**}$ & 0.000$^{**}$ \\ 
+  &  &  &  & (0.000) & (0.000) \\ 
+  & & & & & \\ 
+ argentine &  &  &  & 0.012$^{***}$ & 0.012$^{***}$ \\ 
+  &  &  &  & (0.003) & (0.003) \\ 
+  & & & & & \\ 
+ numberPreviousImprisonments &  &  & $-$0.004$^{***}$ & $-$0.005$^{***}$ & $-$0.005$^{***}$ \\ 
+  &  &  & (0.001) & (0.001) & (0.001) \\ 
+  & & & & & \\ 
+ yearOfImprisonment &  &  &  & 0.001$^{***}$ & 0.001$^{***}$ \\ 
+  &  &  &  & (0.0004) & (0.0004) \\ 
+  & & & & & \\ 
+  
+ Constant & 0.003 & 0.009 & 0.010 & $-$2.677$^{***}$ & $-$2.389$^{***}$ \\ 
+  & (0.005) & (0.006) & (0.006) & (0.728) & (0.722) \\ 
+  & & & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 24,003 & 24,003 & 24,003 & 23,928 & 23,928 \\ 
+R$^{2}$ & 0.043 & 0.044 & 0.045 & 0.046 & 0.046 \\ 
+Adjusted R$^{2}$ & 0.042 & 0.043 & 0.043 & 0.045 & 0.045 \\ 
+Residual Std. Error & 0.122 (df = 23984) & 0.122 (df = 23974) & 0.122 (df = 23973) & 0.122 (df = 23894) & 0.122 (df = 23893) \\ 
+F Statistic & 59.209$^{***}$ (df = 18; 23984) & 39.347$^{***}$ (df = 28; 23974) & 38.579$^{***}$ (df = 29; 23973) & 34.821$^{***}$ (df = 33; 23894) & 34.054$^{***}$ (df = 34; 23893) \\ 
+\endrule
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{5}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} }
+\end{table} 
 
+%--------------------------------------------------
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+ \resizebox{\columnwidth}{!}{
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{5}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-6} 
+\\[-1.8ex] & \multicolumn{5}{c}{electronicMonitoring} \\ 
+ & (I) & (II) & (III) & (IV) & (V) \\ 
+\hline \\[-1.8ex] 
+ percJudgeSentToEM & 0.663$^{***}$ & 0.660$^{***}$ & 0.660$^{***}$ & 0.660$^{***}$ & 0.637$^{***}$ \\ 
+  & (0.085) & (0.085) & (0.085) & (0.085) & (0.087) \\ 
+  & & & & & \\ 
+ judgeAlreadyUsedEM &  &  &  &  & 0.006$^{**}$ \\ 
+  &  &  &  &  & (0.002) \\ 
+  & & & & & \\ 
+ mostSeriousCrime02 - Attempted homicide &  & $-$0.001 & $-$0.001 & $-$0.001 & $-$0.001 \\ 
+  &  & (0.008) & (0.008) & (0.008) & (0.008) \\ 
+  & & & & & \\ 
+ mostSeriousCrime03 - Sexual offenses &  & 0.001 & 0.001 & 0.0004 & 0.0003 \\ 
+  &  & (0.008) & (0.008) & (0.008) & (0.008) \\ 
+  & & & & & \\ 
+ mostSeriousCrime04 - Other serious crimes &  & $-$0.001 & 0.0001 & 0.0001 & $-$0.00000 \\ 
+  &  & (0.007) & (0.007) & (0.007) & (0.007) \\ 
+  & & & & & \\ 
+ mostSeriousCrime05 - Aggravated robbery &  & $-$0.004 & $-$0.003 & $-$0.003 & $-$0.003 \\ 
+  &  & (0.004) & (0.004) & (0.004) & (0.004) \\ 
+  & & & & & \\ 
+ mostSeriousCrime06 - Attempted aggravated robbery &  & $-$0.014$^{***}$ & $-$0.013$^{***}$ & $-$0.012$^{***}$ & $-$0.012$^{***}$ \\ 
+  &  & (0.004) & (0.004) & (0.004) & (0.004) \\ 
+  & & & & & \\ 
+ mostSeriousCrime07 - Robbery &  & $-$0.011$^{***}$ & $-$0.010$^{**}$ & $-$0.009$^{**}$ & $-$0.009$^{**}$ \\ 
+  &  & (0.004) & (0.004) & (0.004) & (0.004) \\ 
+  & & & & & \\ 
+ mostSeriousCrime08 - Attempted robbery &  & $-$0.009$^{*}$ & $-$0.007 & $-$0.005 & $-$0.006 \\ 
+  &  & (0.005) & (0.005) & (0.005) & (0.005) \\ 
+  & & & & & \\ 
+ mostSeriousCrime09 - Possession of firearms &  & $-$0.008 & $-$0.007 & $-$0.006 & $-$0.007 \\ 
+  &  & (0.005) & (0.005) & (0.006) & (0.005) \\ 
+  & & & & & \\ 
+ mostSeriousCrime10 - Larceny / Attempted larceny &  & $-$0.012$^{***}$ & $-$0.010$^{**}$ & $-$0.009$^{*}$ & $-$0.009$^{*}$ \\ 
+  &  & (0.005) & (0.005) & (0.005) & (0.005) \\ 
+  & & & & & \\ 
+ mostSeriousCrime11 - Other minor crimes &  & 0.005 & 0.007 & 0.007 & 0.006 \\ 
+  &  & (0.006) & (0.006) & (0.006) & (0.006) \\ 
+  & & & & & \\ 
+ age &  &  &  & $-$0.00001$^{**}$ & $-$0.00001$^{*}$ \\ 
+  &  &  &  & (0.00000) & (0.00000) \\ 
+  & & & & & \\ 
+ ageSquared &  &  &  & 0.000$^{**}$ & 0.000$^{**}$ \\ 
+  &  &  &  & (0.000) & (0.000) \\ 
+  & & & & & \\ 
+ argentine &  &  &  & 0.012$^{***}$ & 0.012$^{***}$ \\ 
+  &  &  &  & (0.003) & (0.003) \\ 
+  & & & & & \\ 
+ numberPreviousImprisonments &  &  & $-$0.004$^{***}$ & $-$0.005$^{***}$ & $-$0.005$^{***}$ \\ 
+  &  &  & (0.001) & (0.001) & (0.001) \\ 
+  & & & & & \\ 
+ yearOfImprisonment &  &  &  & 0.001$^{***}$ & 0.001$^{***}$ \\ 
+  &  &  &  & (0.0004) & (0.0004) \\ 
+  & & & & & \\ 
+  
+ Constant & 0.003 & 0.009 & 0.010 & $-$2.677$^{***}$ & $-$2.389$^{***}$ \\ 
+  & (0.005) & (0.006) & (0.006) & (0.728) & (0.722) \\ 
+  & & & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 24,003 & 24,003 & 24,003 & 23,928 & 23,928 \\ 
+R$^{2}$ & 0.043 & 0.044 & 0.045 & 0.046 & 0.046 \\ 
+Adjusted R$^{2}$ & 0.042 & 0.043 & 0.043 & 0.045 & 0.045 \\ 
+Residual Std. Error & 0.122 (df = 23984) & 0.122 (df = 23974) & 0.122 (df = 23973) & 0.122 (df = 23894) & 0.122 (df = 23893) \\ 
+F Statistic & 59.209$^{***}$ (df = 18; 23984) & 39.347$^{***}$ (df = 28; 23974) & 38.579$^{***}$ (df = 29; 23973) & 34.821$^{***}$ (df = 33; 23894) & 34.054$^{***}$ (df = 34; 23893) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{5}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} }
+\end{table} 
+
+%----------------------------------------------------------
+
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+  \resizebox{\columnwidth}{!}{
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{5}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-6} 
+\\[-1.8ex] & \multicolumn{5}{c}{recidivism} \\ 
+\\[-1.8ex] & \multicolumn{2}{c}{\textit{OLS}} & \textit{probit} & \multicolumn{2}{c}{\textit{OLS}} \\ 
+ & (I) & (II) & (III) & (IV) & (V) \\ 
+
+\hline \\[-1.8ex] 
+ electronicMonitoring & $-$0.092$^{***}$ & $-$0.090$^{***}$ & $-$0.405$^{***}$ & $-$0.089$^{***}$ & $-$0.086$^{***}$ \\ 
+  & (0.021) & (0.024) & (0.107) & (0.024) & (0.023) \\ 
+  & & & & & \\ 
+ judgeEverUsedEM &  &  &  &  & $-$0.017 \\ 
+  &  &  &  &  & (0.024) \\ 
+  & & & & & \\ 
+ mostSeriousCrime02 - Attempted homicide &  & 0.010 &  & 0.011 & 0.011 \\ 
+  &  & (0.064) &  & (0.064) & (0.063) \\ 
+  & & & & & \\ 
+ mostSeriousCrime03 - Sexual offenses &  & $-$0.038 &  & $-$0.045 & $-$0.029 \\ 
+  &  & (0.052) &  & (0.052) & (0.050) \\ 
+  & & & & & \\ 
+ mostSeriousCrime04 - Other serious crimes &  & 0.200$^{**}$ &  & 0.202$^{**}$ & 0.226$^{***}$ \\ 
+  &  & (0.086) &  & (0.087) & (0.088) \\ 
+  & & & & & \\ 
+ mostSeriousCrime05 - Aggravated robbery &  & 0.008 &  & 0.010 & 0.015 \\ 
+  &  & (0.034) &  & (0.034) & (0.033) \\ 
+  & & & & & \\ 
+ mostSeriousCrime06 - Attempted aggravated robbery &  & $-$0.032 &  & $-$0.033 & $-$0.015 \\ 
+  &  & (0.049) &  & (0.049) & (0.048) \\ 
+  & & & & & \\ 
+ mostSeriousCrime07 - Robbery &  & 0.027 &  & 0.025 & 0.053 \\ 
+  &  & (0.050) &  & (0.050) & (0.050) \\ 
+  & & & & & \\ 
+ mostSeriousCrime08 - Attempted robbery &  & 0.046 &  & 0.045 & 0.064 \\ 
+  &  & (0.055) &  & (0.055) & (0.054) \\ 
+  & & & & & \\ 
+ mostSeriousCrime09 - Possession of firearms &  & 0.080 &  & 0.087 & 0.072 \\ 
+  &  & (0.059) &  & (0.060) & (0.058) \\ 
+  & & & & & \\ 
+ mostSeriousCrime10 - Larceny / Attempted larceny &  & $-$0.019 &  & $-$0.014 & $-$0.006 \\ 
+  &  & (0.083) &  & (0.086) & (0.080) \\ 
+  & & & & & \\ 
+ mostSeriousCrime11 - Other minor crimes &  & $-$0.001 &  & 0.012 & 0.014 \\ 
+  &  & (0.056) &  & (0.055) & (0.056) \\ 
+  & & & & & \\ 
+  
+ age &  & $-$0.0002$^{***}$ & $-$0.001$^{***}$ & $-$0.00004$^{***}$ & $-$0.0002$^{***}$ \\ 
+  &  & (0.00005) & (0.0002) & (0.00000) & (0.00005) \\ 
+  & & & & & \\ 
+ ageSquared &  & 0.000$^{***}$ & 0.00000$^{**}$ &  & 0.000$^{***}$ \\ 
+  &  & (0.000) & (0.000) &  & (0.000) \\ 
+  & & & & & \\ 
+ argentine &  & $-$0.064 & $-$0.195 & $-$0.066 & $-$0.050 \\ 
+  &  & (0.055) & (0.248) & (0.057) & (0.056) \\ 
+  & & & & & \\ 
+ numberPreviousImprisonments &  & 0.167$^{***}$ & 0.683$^{***}$ & 0.157$^{***}$ & 0.175$^{***}$ \\ 
+  &  & (0.024) & (0.089) & (0.024) & (0.024) \\ 
+  & & & & & \\ 
+ yearOfImprisonment &  & $-$0.058$^{***}$ & $-$0.262$^{***}$ & $-$0.057$^{***}$ &  \\ 
+  &  & (0.018) & (0.056) & (0.018) &  \\ 
+  & & & & & \\ 
+
+ Constant & 0.224$^{***}$ & 116.588$^{***}$ & 527.711$^{***}$ & 115.193$^{***}$ & 1.622$^{***}$ \\ 
+  & (0.012) & (36.256) & (113.254) & (36.845) & (0.305) \\ 
+  & & & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 1,526 & 1,526 & 1,513 & 1,526 & 1,503 \\ 
+R$^{2}$ & 0.010 & 0.185 &  & 0.180 & 0.177 \\ 
+Adjusted R$^{2}$ & 0.009 & 0.162 &  & 0.158 & 0.163 \\ 
+Log Likelihood &  &  & $-$611.823 &  &  \\ 
+Akaike Inf. Crit. &  &  & 1,273.645 &  &  \\ 
+Residual Std. Error & 0.399 (df = 1524) & 0.367 (df = 1484) &  & 0.368 (df = 1485) & 0.368 (df = 1477) \\ 
+F Statistic & 15.210$^{***}$ (df = 1; 1524) & 8.212$^{***}$ (df = 41; 1484) &  & 8.154$^{***}$ (df = 40; 1485) & 12.685$^{***}$ (df = 25; 1477) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{5}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} }
+\end{table} 
+%---------------------------------------------------------
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+    \resizebox{\columnwidth}{!}{
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{5}{c}{Dependent Variable: recidivism} \\ 
+\cline{2-6} 
+ & IV: court & IV: percJudgeSentToEM & IVs: percJudgeSentToEM, judgeAlreadyUsedEM & IV probit & IV: largeSampleEstimate \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4) & (5)\\ 
+\hline \\[-1.8ex] 
+ EM1\_pred & $-$0.112$^{**}$ &  &  &  &  \\ 
+  & (0.057) &  &  &  &  \\ 
+  & & & & & \\ 
+ EM12\_pred &  & $-$0.138 &  &  &  \\ 
+  &  & (0.093) &  &  &  \\ 
+  & & & & & \\ 
+ EM13\_pred &  &  & $-$0.158$^{*}$ &  & $-$0.158$^{*}$ \\ 
+  &  &  & (0.091) &  & (0.091) \\ 
+  & & & & & \\ 
+ EM14\_pred &  &  &  & $-$0.174$^{*}$ &  \\ 
+  &  &  &  & (0.095) &  \\ 
+  & & & & & \\ 
+
+ 
+ Constant & 92.101$^{***}$ & 91.615$^{***}$ & 91.534$^{***}$ & 91.692$^{***}$ & 91.534$^{***}$ \\ 
+  & (8.341) & (8.349) & (8.344) & (8.353) & (8.344) \\ 
+  & & & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 1,503 & 1,503 & 1,503 & 1,494 & 1,503 \\ 
+R$^{2}$ & 0.168 & 0.167 & 0.167 & 0.167 & 0.167 \\ 
+Adjusted R$^{2}$ & 0.149 & 0.148 & 0.148 & 0.148 & 0.148 \\ 
+Residual Std. Error & 0.371 (df = 1469) & 0.371 (df = 1469) & 0.371 (df = 1469) & 0.372 (df = 1461) & 0.371 (df = 1469) \\ 
+F Statistic & 8.985$^{***}$ (df = 33; 1469) & 8.897$^{***}$ (df = 33; 1469) & 8.924$^{***}$ (df = 33; 1469) & 9.136$^{***}$ (df = 32; 1461) & 8.924$^{***}$ (df = 33; 1469) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\end{tabular} }
+\end{table} 
+%--------------------------------------------------------
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+      \resizebox{\columnwidth}{!}{
+\begin{tabular}{@{\extracolsep{5pt}}lcccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{4}{c}{Dependent Variable: recidivism} \\ 
+\cline{2-5} 
+
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+ EM161\_pred & $-$0.243$^{**}$ &  &  &  \\ 
+  & (0.105) &  &  &  \\ 
+  & & & & \\ 
+ EM162\_pred &  & $-$0.151 &  &  \\ 
+  &  & (0.117) &  &  \\ 
+  & & & & \\ 
+ EM163\_pred &  &  & $-$0.154$^{*}$ &  \\ 
+  &  &  & (0.091) &  \\ 
+  & & & & \\ 
+ EM165\_pred &  &  &  & $-$0.210$^{**}$ \\ 
+  &  &  &  & (0.094) \\ 
+  & & & & \\ 
+ 
+ incomeProfession & 0.00005$^{*}$ &  &  &  \\ 
+  & (0.00002) &  &  &  \\ 
+  & & & & \\ 
+ spouse &  & 0.029 &  &  \\ 
+  &  & (0.025) &  &  \\ 
+  & & & & \\ 
+ familyVisits &  & 0.048 &  &  \\ 
+  &  & (0.068) &  &  \\ 
+  & & & & \\ 
+  
+ Constant & 80.358$^{***}$ & 91.259$^{***}$ & 94.417$^{***}$ & 89.300$^{***}$ \\ 
+  & (10.415) & (9.856) & (8.454) & (8.442) \\ 
+  & & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 941 & 1,147 & 1,503 & 1,441 \\ 
+R$^{2}$ & 0.162 & 0.169 & 0.170 & 0.169 \\ 
+Adjusted R$^{2}$ & 0.131 & 0.143 & 0.150 & 0.150 \\ 
+Residual Std. Error & 0.372 (df = 906) & 0.383 (df = 1111) & 0.371 (df = 1467) & 0.368 (df = 1407) \\ 
+F Statistic & 5.156$^{***}$ (df = 34; 906) & 6.471$^{***}$ (df = 35; 1111) & 8.574$^{***}$ (df = 35; 1467) & 8.685$^{***}$ (df = 33; 1407) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\end{tabular} }
+\end{table} 
+
+%--------------------------------------------------------
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\resizebox{\columnwidth}{!}{
+
+\begin{tabular}{@{\extracolsep{5pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & \multicolumn{2}{c}{recidivism} & escapees \\ 
+ & (I) & (II) & (III) \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ EMLengthTotalPrisonRatio & $-$0.087 &  &  \\ 
+  & (0.056) &  &  \\ 
+  & & & \\ 
+ mostSeriousCrime02 - Attempted homicide & 0.079 & 0.073 & $-$0.088 \\ 
+  & (0.118) & (0.124) & (0.079) \\ 
+  & & & \\ 
+ mostSeriousCrime03 - Sexual offenses & 0.135 & 0.122 & 0.209 \\ 
+  & (0.129) & (0.127) & (0.163) \\ 
+  & & & \\ 
+ mostSeriousCrime04 - Other serious crimes & $-$0.071 & $-$0.071 & 0.172 \\ 
+  & (0.080) & (0.079) & (0.152) \\ 
+  & & & \\ 
+ mostSeriousCrime05 - Aggravated robbery & 0.007 & 0.001 & $-$0.004 \\ 
+  & (0.062) & (0.062) & (0.076) \\ 
+  & & & \\ 
+ mostSeriousCrime06 - Attempted aggravated robbery & 0.067 & 0.053 & $-$0.120 \\ 
+  & (0.107) & (0.108) & (0.104) \\ 
+  & & & \\ 
+ mostSeriousCrime07 - Robbery & 0.151 & 0.144 & $-$0.032 \\ 
+  & (0.105) & (0.105) & (0.113) \\ 
+  & & & \\ 
+ mostSeriousCrime08 - Attempted robbery & $-$0.030 & $-$0.046 & $-$0.020 \\ 
+  & (0.093) & (0.092) & (0.113) \\ 
+  & & & \\ 
+ mostSeriousCrime09 - Possession of firearms & $-$0.026 & $-$0.041 & 0.062 \\ 
+  & (0.094) & (0.093) & (0.114) \\ 
+  & & & \\ 
+ mostSeriousCrime10 - Larceny / Attempted larceny & $-$0.142 & $-$0.156 & 0.098 \\ 
+  & (0.149) & (0.142) & (0.206) \\ 
+  & & & \\ 
+ mostSeriousCrime11 - Other minor crimes & $-$0.033 & $-$0.053 & $-$0.082 \\ 
+  & (0.089) & (0.088) & (0.093) \\ 
+  & & & \\ 
+ age & $-$0.00004 & $-$0.00005 & $-$0.00001 \\ 
+  & (0.0001) & (0.0001) & (0.0001) \\ 
+  & & & \\ 
+ ageSquared & 0.000 & 0.000 & $-$0.000 \\ 
+  & (0.000) & (0.000) & (0.000) \\ 
+  & & & \\ 
+ argentine & 0.228$^{**}$ & 0.210$^{*}$ & 0.096 \\ 
+  & (0.113) & (0.123) & (0.104) \\ 
+  & & & \\ 
+ numberPreviousImprisonments & 0.119$^{**}$ & 0.132$^{***}$ & 0.135$^{***}$ \\ 
+  & (0.047) & (0.046) & (0.048) \\ 
+  & & & \\ 
+ yearOfImprisonment & $-$0.033$^{***}$ & $-$0.032$^{***}$ & $-$0.003 \\ 
+  & (0.008) & (0.008) & (0.010) \\ 
+  & & & \\ 
+ 
+ Constant & 65.583$^{***}$ & 65.105$^{***}$ & 6.985 \\ 
+  & (16.191) & (16.205) & (20.380) \\ 
+  & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 386 & 386 & 386 \\ 
+R$^{2}$ & 0.209 & 0.203 & 0.106 \\ 
+Adjusted R$^{2}$ & 0.140 & 0.136 & 0.030 \\ 
+Residual Std. Error & 0.314 (df = 354) & 0.315 (df = 355) & 0.371 (df = 355) \\ 
+F Statistic & 3.018$^{***}$ (df = 31; 354) & 3.021$^{***}$ (df = 30; 355) & 1.401$^{*}$ (df = 30; 355) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} }
+\end{table} 
+
+%----------------------------------------------------------
 
 \newpage
 \bibliographystyle{plain}
