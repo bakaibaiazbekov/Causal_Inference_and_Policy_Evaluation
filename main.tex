@@ -63,7 +63,7 @@ Electronic monitoring arises several debates such as that spending time under el
 At least two practical empirical problems appear when attempting to estimate a causal estimate, one if which can be called a \textit{problem of selection}, refers to at least one potential criterion for the granting of electronic monitoring to an offender is his risk of recidivism,  and the \textit{the problem of differential risk} of the target population, refers to the possibility that electronic monitoring programs are restricted to low-risk populations(whose most serious crime is drunk driving). Thereby, the detection can fail to observe negative effect of electronic monitoring on recidivism, simply it reflects that this population is already at very low risk of crime and the control group receives very light punishment.  
 
 Authors described three important elements of the institutional and theoretical background suggesting that is is possible to use an instrumental variables approach. Initially, they described the legal process from the time individuals are arrested until they reach trial, with special attention to the role of judge. Next, they showed very large ideological differences across judges. Finally, authors presented a brief model with several of the features of Argentine setting and where ideological judges determine electronic monitoring allocation.    
-They provided reasonable interpretation of estimate is that the causal effect of treating an apprehended offender with electronic monitoring instead of prison. The offenders are randomly matched to judges and the likelihood an offender is sent to electronic monitoring instead of prison differs substantially across judges. Another important feature is because of the usual ideological differences across judges\textbf{Waldfogel1991}\cite{Waldfogel91} and these ideological differences become exaggerated in Argentina. The jails and prisons have frequently been denounced excessively cruel by human right organizations. This results in two stereotypes: judges who frequently allocate electronic monitoring, or liberals and the judges who never assign electronic monitoring or conservative, tough hand judges. Since the assignment of judges is exogenous to prisoners characteristics, it is possible to instrument the decision to send an offender to prison or electronic monitoring with proxy for judge's ideology. The instrumental variable results reveal a robust, negative and significant effect of electronic monitoring on later rearrest rates of between 11 and 16 percentage points or approximately half the baseline recidivism rate.   
+They provided reasonable interpretation of estimate is that the causal effect of treating an apprehended offender with electronic monitoring instead of prison. The offenders are randomly matched to judges and the likelihood an offender is sent to electronic monitoring instead of prison differs substantially across judges. Another important feature is because of the usual ideological differences across judges\textbf{(Waldfogel1991)}\cite{Waldfogel91} and these ideological differences become exaggerated in Argentina. The jails and prisons have frequently been denounced excessively cruel by human right organizations. This results in two stereotypes: judges who frequently allocate electronic monitoring, or liberals and the judges who never assign electronic monitoring or conservative, tough hand judges. Since the assignment of judges is exogenous to prisoners characteristics, it is possible to instrument the decision to send an offender to prison or electronic monitoring with proxy for judge's ideology. The instrumental variable results reveal a robust, negative and significant effect of electronic monitoring on later rearrest rates of between 11 and 16 percentage points or approximately half the baseline recidivism rate.   
 
 
 
@@ -96,7 +96,7 @@ Similarly to the simple IV regression model, the general IV model can be estimat
 
 To show that our instrument is valid we have\textit{ two conditions.} In the general IV regression model, the instrument relevance and instrument exogeniety assumptions are the same as in the simple regression model with a single endogenous regressor and only one instrument. Lets say for $Z_{1i},...,Z_{mi}$, judge ideology, instrument to be as set of valid instruments, the following two conditions must be fulfilled: First of all, \textbf{Instrument relevance} : when there are $k$ endogenous variables, electronic monitoring, $r$ exogenous variables and $m >= k$ instruments $Z$ and the $\widehat{X}_{1i} ,..., \widehat{X}_{ki}$ are the predicted values from the  $k$ population first stage regressions, it must hold that $\widehat{X}_{1i} ,..., \widehat{X}_{ki}, W_{1i},...,W_{ri}, 1$ are not perfectly multicollinear. 
 
-Next condition is \textbf{Instrument exogeneity}: it should hold for all $m$ instruments  and it must be uncorrelated with error term, $\rho_{Z_{1i} = 0} ,..., \rho_{Z_{mi,u_i}}$. This condition can not be tested thats why I will prove verbally. Since the assignment of judges is exogenous to prisoners characteristics (whenever a person is detained by the police, she or he is assigned to the judge who was on duty on that day, and duty turns are assigned by a lottery). 
+Next condition is \textbf{Instrument exogeneity}: it should hold for all $m$ instruments  and it must be uncorrelated with error term, $\rho_{Z_{1i} = 0} ,..., \rho_{Z_{mi,u_i}}$. This condition can not be tested thats why I will prove verbally. Since the assignment of judges is exogenous to prisoners characteristics (whenever a person is detained by the police, she or he is assigned to the judge who was on duty on that day, and duty turns are assigned by a lottery). Lastly, \textbf{Exclusion restriction} assumption seems to be hold, since judge's personal ideology is unlikely to affect criminal's future recidivism rate directly. It only affects $y$ dependent variable thru endogenous variable. 
 
 There are three groups in the sample: those who were assigned to EM, those who went to prison sent by a judge who uses EM, and those sent to prison by judge who never used EM. If judges who use EM in fact select the good types( low recidivism risk) for treatment with EM, then those standing before that same judge who were not selected for EM should be bad types(high recidivism risk). In particular, their average type should be worse than the average type of the conservative judges who did zero selection. In other words, the point estimate on the dummy judge ever used EM should be positive (as the base category is those who were sent to prison by judges who never selected anyone for EM). Instead this dummy variable is insignificant, with a point estimate of $-0.02$. 
 
@@ -117,7 +117,7 @@ where judges with \textit{d > 0} will never use EM because they prefer punitive 
 The observed assignment to EM is not the product of a uniform tendency across judges. Instead, some judges in the sample tend to assign EM more frequently than others. From 293 judges acting on the 24,362 cases were analyzed, indeed, only ~100 have ever used EM and other ~200 judges never used EM when it was available to them. (number of EM devices <300). Hence, they constructed a measure of the intervening judge's liberal ideology, \textit{ \% judge sent to EM}, defined as the proportion of alleged offenders who stood before the intervening judge that were assigned to EM. 
 As an example in table 2 exploits the information on the intervening judge's ideology to investigate an alleged offender's tendency to receive EM in the selection sample. In column 1 of table 2 the EM assignment( its dependent binary variable, one if the alleged offender received EM or zero otherwise) is positively correlated with \% judge sent to EM, controlling for judicial district dummies. The implied effect was large: a one standard deviation increased in judge's EM rate (0,067) would imply an increase in the likelihood of EM assignment of 0.044(0.663 x 0,067). 
 
-Next in column two of the same table includes the crime category for the most serious alleged offence and the omitted category is homicide, noting that the seriousness of the alleged offense has no predictive power and in fact those accused of homicide were more likely to receive EM than those accused of less serious crimes, such as: larceny etc.. The results are inconsistent because of flight risks. The adjusted \textbf{Rsqr} of a baseline regression of EM assignment exclusively on judicial district fixed effects is .028. Similarly, when such a baseline regression includes both district fixed effects and the alleged offence categories, at same time it excludes \% judge sent to EM, \textbf{Rsqr} is 0.029. The instrument contributes to the model's fit more than the dummies capturing the seriousness of the imputed offense because the adjusted \textbf{Rsqr} jumps from 0.028 to 0.042.  
+Next in column two of the same table includes the crime category for the most serious alleged offence and the omitted category is homicide, noting that the seriousness of the alleged offense has no predictive power and in fact those accused of homicide were more likely to receive EM than those accused of less serious crimes, such as: larceny etc.. The results are inconsistent because of flight risks. The adjusted $R^2$ of a baseline regression of EM assignment exclusively on judicial district fixed effects is .028. Similarly, when such a baseline regression includes both district fixed effects and the alleged offence categories, at same time it excludes \% judge sent to EM, $R^2$ is 0.029. The instrument contributes to the model's fit more than the dummies capturing the seriousness of the imputed offense because the adjusted $R^2$ jumps from 0.028 to 0.042.  
 
 Another ambiguous column was the third column, where it includes the alleged offender's criminal history and reveals a negative and marginally significant coefficient. It was unclear why the severity of the crime, is a measure of police-reported crime that reflects the relative seriousness of individual offences, should have such different impact on judge's evaluation of the flight risk than criminal history. Moreover, the coefficient on \% judge sent to EM is unaffected by the inclusion of the crime categories or the alleged offender's criminal history as controls. 
 
@@ -183,7 +183,7 @@ When the criminal justice releases prisoners, it creates trade-off between two s
 \newpage
 \section{Extensions}
 \subsection{Application of Decision Trees}
-In section I decided to predict recidivism for each individual using a statistical model built from given data. Here I wanted to see if an analytical model could perform and predict recidivism to prevent the future criminal individuals or if they were assigned to prison, keep them for a longer time. \textbf{(Kuziemko 2013)}\cite{Kuziemko2013} In this model I used a method called classification and regression trees, CART. In our case the outcome is binary( 0 for no recidivism and 1 for recidivism). I could also used a logistic regression models but they are not easily interpretable. The model coefficients in the Logit regression indicate the importance and relative effect of variables, but do not give a simple explanation of how a decision is made. 
+In this section I decided to predict recidivism for each individual using a statistical model built from given data. Here I wanted to see if an analytical model could perform and predict recidivism to prevent the future criminal individuals or if they were assigned to prison, keep them for a longer time. \textbf{(Kuziemko 2013)}\cite{Kuziemko2013} In this model I used a method called classification and regression trees, CART. In our case the outcome is binary( 0 for no recidivism and 1 for recidivism). I could also used a logistic regression models but they are not easily interpretable. The model coefficients in the Logit regression indicate the importance and relative effect of variables, but do not give a simple explanation of how a decision is made. 
 
 
 \begin{figure}[h]
@@ -200,7 +200,7 @@ In section I decided to predict recidivism for each individual using a statistic
 \label{fig:Figure 1}
 \end{figure}
 
-A CART model is represented by tree that splits by observation outcome. The first split, as shown in the figure,  explains whether year is equal to 1993, 2003, 2004, 2005, 2006, 2007. If yes, the model says to predict red and if no the model moves on to the next split. Then the second split whether or not the number of imprisonment is less than one. If no, the model moves to the last split. The last split checks whether the year of entering to penitiary system is equal to 1997, 1998, 2000, 2001, 2002. If yes, the model predicts no recidivism, if no, the model predicts recidivism. 
+A CART model is represented by tree that splits by observation outcome \cite{The_Analytics_Edge2016}. The first split, as shown in the figure,  explains whether year is equal to 1993, 2003, 2004, 2005, 2006, 2007. If yes, the model says to predict red and if no the model moves on to the next split. Then the second split whether or not the number of imprisonment is less than one. If no, the model moves to the last split. The last split checks whether the year of entering to penitiary system is equal to 1997, 1998, 2000, 2001, 2002. If yes, the model predicts no recidivism, if no, the model predicts recidivism. 
 
 
 After cleaning and omitting all the NAs in the data, I used the method CART. This method builds what is called a tree by splitting on the values of the independent variables. To predict the recidivism for new observation, it is easy to follow the splits in the tree and at the end, I could see the most frequent outcome of recidivism in the training set that followed the same path. 
@@ -214,7 +214,6 @@ In addition, I used a method that is similar to CART model named \textit{random 
 
 
 
-\newpage
 \section{Discussion}
 \subsection{Welfare}
 After several years, it is clear that EM has been almost desperately applied without adequate vision, planning, program integration, staff training, and concurrent research. It has punished, perhaps more humanely and cheaply, and it has been an element in the avoidance of prison crowding and prison construction, but it is not free and it is not without unintended effects. 
@@ -224,16 +223,27 @@ In times with large prison populations and discussions regarding downsizing, it 
 Moreover, I personally find an interesting approach to investigate the optimal assignment of EM according to a cutoff rule. After deriving each individual probability expectation of recidivism and calculating their cost of incarceration, I expect that only those subjects, whose cost of recidivism is below the cost of incarceration, will be released under EM. Since the cutoff will induce a discontinuity in the distribution, we should only use the  inmates which are below the cutoff for investigating the causal effects in future outcomes. 
 
 \section{Conclusion}
-In conclusion, authors seeked to contribute to this debate by providing an estimate of the effect on recidivism of having a person serve time under electronic surveillance instead of prison. One of the key challenges they faced is that, ideally they tried to compare similar individuals after their release from EM and prison. This was rarely observed in practice because judicial allocation decisions are obviously influenced by the offenders perceived "meanness" and risk of recidivism. This is one of the reason why countries have a legal system. In this paper, they showed several essentials of the legal system in Argentina to study the effect of an EM program, where it is used to substitute for imprisonment of alleged offenders never receive final sentence, the system of preventive imprisonment is a key part of the legal system. 
+In conclusion, authors seeked to contribute to this debate by providing an estimate of the effect on recidivism of having a person serve time under electronic surveillance instead of prison. One of the key challenges they faced is that, ideally they tried to compare similar individuals after their release from EM and prison. This was rarely observed in practice because judicial allocation decisions are obviously influenced by the offenders perceived "meanness" and risk of recidivism. In this paper, they showed several essentials of the legal system in Argentina to study the effect of an EM program, where it is used to substitute for imprisonment of alleged offenders never receive final sentence. In fact, liberal - learning judges have allocated EM to individuals accused of very serious crimes(including homicide) and with prior records of imprisonment. 
+
+Exploiting random assignment to judges with differing inclinations to assign EM, the main IV estimates suggest that treating alleged offenders with electronic monitoring instead of prison induces a large and significant reduction in recidivism of between 11 and 16 percentage points. In this replication of paper, I replicated all tables, checked IV validity assumptions , minor measurement analysis, described how original paper could be extended to investigate in the future, and got recidivism probabilities for each individual in the data set for the given characteristics to implement them in further analysis too.  
 
 
+\section{Statutory Declaration}
+I declare that I have authored this thesis independently, that I have not used other than the declared sources / resources, and that I have explicitly marked all material which has been quoted either literally or by content from the used sources.
 
 
 \newpage
 \section{Appendix}
 
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.50]{feature_imp.jpg}
+\caption{Feature Importance Plot}
+\label{fig:Figure 1}
+\end{figure}
+
 \begin{table}[!htbp] \centering 
-  \caption{} 
+  \caption{Electronic Monitoring Assignment and Type of Crimes} 
   \label{Table 2} 
  \resizebox{\linewidth}{!}{
 \begin{tabular}{@{\extracolsep{5pt}}lccccc} 
@@ -291,7 +301,6 @@ F Statistic & 59.209$^{***}$ (df = 18; 23984) & 39.347$^{***}$ (df = 28; 23974) 
 \endrule
 \hline 
 \hline \\[-1.8ex] 
-\textit{Note:}  & \multicolumn{5}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
 \end{tabular} }
 \end{table} 
 
@@ -353,14 +362,14 @@ Residual Std. Error & 0.122 (df = 23984) & 0.122 (df = 23974) & 0.122 (df = 2397
 F Statistic & 59.209$^{***}$ (df = 18; 23984) & 39.347$^{***}$ (df = 28; 23974) & 38.579$^{***}$ (df = 29; 23973) & 34.821$^{***}$ (df = 33; 23894) & 34.054$^{***}$ (df = 34; 23893) \\ 
 \hline 
 \hline \\[-1.8ex] 
-\textit{Note:}  & \multicolumn{5}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+
 \end{tabular} }
 \end{table} 
 
 %----------------------------------------------------------
 
 \begin{table}[!htbp] \centering 
-  \caption{} 
+  \caption{Recidivism and Electronic Monitoring: OLS Regression} 
   \label{} 
   \resizebox{\columnwidth}{!}{
 \begin{tabular}{@{\extracolsep{5pt}}lccccc} 
@@ -419,12 +428,12 @@ Residual Std. Error & 0.399 (df = 1524) & 0.367 (df = 1484) &  & 0.368 (df = 148
 F Statistic & 15.210$^{***}$ (df = 1; 1524) & 8.212$^{***}$ (df = 41; 1484) &  & 8.154$^{***}$ (df = 40; 1485) & 12.685$^{***}$ (df = 25; 1477) \\ 
 \hline 
 \hline \\[-1.8ex] 
-\textit{Note:}  & \multicolumn{5}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+
 \end{tabular} }
 \end{table} 
 %---------------------------------------------------------
 \begin{table}[!htbp] \centering 
-  \caption{} 
+  \caption{Recidivism and Electronic Monitoring: IV Regressions} 
   \label{} 
     \resizebox{\columnwidth}{!}{
 \begin{tabular}{@{\extracolsep{5pt}}lccccc} 
@@ -460,65 +469,10 @@ F Statistic & 8.985$^{***}$ (df = 33; 1469) & 8.897$^{***}$ (df = 33; 1469) & 8.
 \hline \\[-1.8ex] 
 \end{tabular} }
 \end{table} 
+
 %--------------------------------------------------------
 \begin{table}[!htbp] \centering 
-  \caption{} 
-  \label{} 
-      \resizebox{\columnwidth}{!}{
-\begin{tabular}{@{\extracolsep{5pt}}lcccc} 
-\\[-1.8ex]\hline 
-\hline \\[-1.8ex] 
- & \multicolumn{4}{c}{Dependent Variable: recidivism} \\ 
-\cline{2-5} 
-
-\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
-\hline \\[-1.8ex] 
- EM161\_pred & $-$0.243$^{**}$ &  &  &  \\ 
-  & (0.105) &  &  &  \\ 
-  & & & & \\ 
- EM162\_pred &  & $-$0.151 &  &  \\ 
-  &  & (0.117) &  &  \\ 
-  & & & & \\ 
- EM163\_pred &  &  & $-$0.154$^{*}$ &  \\ 
-  &  &  & (0.091) &  \\ 
-  & & & & \\ 
- EM165\_pred &  &  &  & $-$0.210$^{**}$ \\ 
-  &  &  &  & (0.094) \\ 
-  & & & & \\ 
- 
- incomeProfession & 0.00005$^{*}$ &  &  &  \\ 
-  & (0.00002) &  &  &  \\ 
-  & & & & \\ 
- spouse &  & 0.029 &  &  \\ 
-  &  & (0.025) &  &  \\ 
-  & & & & \\ 
- familyVisits &  & 0.048 &  &  \\ 
-  &  & (0.068) &  &  \\ 
-  & & & & \\ 
-  
- Constant & 80.358$^{***}$ & 91.259$^{***}$ & 94.417$^{***}$ & 89.300$^{***}$ \\ 
-  & (10.415) & (9.856) & (8.454) & (8.442) \\ 
-  & & & & \\ 
-\hline \\[-1.8ex] 
-Observations & 941 & 1,147 & 1,503 & 1,441 \\ 
-R$^{2}$ & 0.162 & 0.169 & 0.170 & 0.169 \\ 
-Adjusted R$^{2}$ & 0.131 & 0.143 & 0.150 & 0.150 \\ 
-Residual Std. Error & 0.372 (df = 906) & 0.383 (df = 1111) & 0.371 (df = 1467) & 0.368 (df = 1407) \\ 
-F Statistic & 5.156$^{***}$ (df = 34; 906) & 6.471$^{***}$ (df = 35; 1111) & 8.574$^{***}$ (df = 35; 1467) & 8.685$^{***}$ (df = 33; 1407) \\ 
-\hline 
-\hline \\[-1.8ex] 
-\end{tabular} }
-\end{table} 
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.50]{feature_imp.jpg}
-\caption{Feature Importance Plot}
-\label{fig:Figure 1}
-\end{figure}
-%--------------------------------------------------------
-\begin{table}[!htbp] \centering 
-  \caption{} 
+  \caption{Recidivism and Escape within EM} 
   \label{} 
 \resizebox{\columnwidth}{!}{
 
@@ -571,7 +525,56 @@ Residual Std. Error & 0.314 (df = 354) & 0.315 (df = 355) & 0.371 (df = 355) \\
 F Statistic & 3.018$^{***}$ (df = 31; 354) & 3.021$^{***}$ (df = 30; 355) & 1.401$^{*}$ (df = 30; 355) \\ 
 \hline 
 \hline \\[-1.8ex] 
-\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+
+\end{tabular} }
+\end{table} 
+%--------------------------------------------------------
+\begin{table}[!htbp] \centering 
+  \caption{Recidivism and Electronic Monitoring: Robustness} 
+  \label{} 
+      \resizebox{\columnwidth}{!}{
+\begin{tabular}{@{\extracolsep{5pt}}lcccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{4}{c}{Dependent Variable: recidivism} \\ 
+\cline{2-5} 
+
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+ EM161\_pred & $-$0.243$^{**}$ &  &  &  \\ 
+  & (0.105) &  &  &  \\ 
+  & & & & \\ 
+ EM162\_pred &  & $-$0.151 &  &  \\ 
+  &  & (0.117) &  &  \\ 
+  & & & & \\ 
+ EM163\_pred &  &  & $-$0.154$^{*}$ &  \\ 
+  &  &  & (0.091) &  \\ 
+  & & & & \\ 
+ EM165\_pred &  &  &  & $-$0.210$^{**}$ \\ 
+  &  &  &  & (0.094) \\ 
+  & & & & \\ 
+ 
+ incomeProfession & 0.00005$^{*}$ &  &  &  \\ 
+  & (0.00002) &  &  &  \\ 
+  & & & & \\ 
+ spouse &  & 0.029 &  &  \\ 
+  &  & (0.025) &  &  \\ 
+  & & & & \\ 
+ familyVisits &  & 0.048 &  &  \\ 
+  &  & (0.068) &  &  \\ 
+  & & & & \\ 
+  
+ Constant & 80.358$^{***}$ & 91.259$^{***}$ & 94.417$^{***}$ & 89.300$^{***}$ \\ 
+  & (10.415) & (9.856) & (8.454) & (8.442) \\ 
+  & & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 941 & 1,147 & 1,503 & 1,441 \\ 
+R$^{2}$ & 0.162 & 0.169 & 0.170 & 0.169 \\ 
+Adjusted R$^{2}$ & 0.131 & 0.143 & 0.150 & 0.150 \\ 
+Residual Std. Error & 0.372 (df = 906) & 0.383 (df = 1111) & 0.371 (df = 1467) & 0.368 (df = 1407) \\ 
+F Statistic & 5.156$^{***}$ (df = 34; 906) & 6.471$^{***}$ (df = 35; 1111) & 8.574$^{***}$ (df = 35; 1467) & 8.685$^{***}$ (df = 33; 1407) \\ 
+\hline 
+\hline \\[-1.8ex] 
 \end{tabular} }
 \end{table} 
 
